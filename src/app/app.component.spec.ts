@@ -1,10 +1,25 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { HttpClientTestingModule, provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { ProductListComponent } from './product-list/product-list.component'; // Si AppComponent l'utilise
+import { MatToolbarModule } from '@angular/material/toolbar'; // Si AppComponent l'utilise
+
+
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [
+        AppComponent,
+        HttpClientTestingModule, 
+        ProductListComponent, 
+        MatToolbarModule, 
+      ],
+      providers: [
+        provideHttpClient(), 
+        provideHttpClientTesting(), 
+      ],
     }).compileComponents();
   });
 
@@ -14,16 +29,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'angularteste' title`, () => {
+  it(`should have the 'Product Catalog' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('angularteste');
+    expect(app.title).toEqual('Product Catalog');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, angularteste');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Catelogue des produits');
   });
 });

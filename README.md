@@ -22,8 +22,8 @@ Une application Angular responsive qui affiche une liste de produits à l'aide d
 
 1. Clone the repository
    ```
-   git clone https://github.com/yourusername/angular-product-catalog.git
-   cd angular-product-catalog
+   git clone https://github.com/tallapenda/angularteste.git
+   cd angularteste
    ```
 
 2. Install dependencies

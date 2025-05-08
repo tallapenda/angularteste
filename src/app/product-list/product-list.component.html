@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="header">
+      <h1>Catelogue des produits</h1>
+      
+      <!-- Search and sort controls -->
+      <div class="controls">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search Products</mat-label>
+          <input matInput [formControl]="searchControl" placeholder="Enter product name">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        
+        <button mat-button class="sort-button" (click)="toggleSortDirection()" matTooltip="Toggle sort order">
+          <mat-icon>sort</mat-icon>
+          <span>Sort</span>
+          <mat-icon>{{getSortDirectionIcon()}}</mat-icon>
+        </button>
+      </div>
+    </div>
+  
+    <!-- Loading spinner -->
+    <div *ngIf="loading" class="spinner-container">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    
+    <!-- Error message -->
+    <div *ngIf="error" class="error-container">
+      <mat-error>{{error}}</mat-error>
+      <button mat-raised-button color="primary" (click)="loadProducts()">Retry</button>
+    </div>
+  
+    <!-- Product grid -->
+    <div *ngIf="!loading && !error" class="product-grid">
+      <mat-card *ngFor="let product of filteredProducts$ | async" class="product-card fade-in">
+        <div class="image-container">
+          <img mat-card-image [src]="product.image" [alt]="product.title" class="product-image">
+        </div>
+        
+        <mat-card-content>
+          <h2 class="product-title">{{product.title}}</h2>
+          <p class="product-price">${{product.price.toFixed(2)}}</p>
+          <p class="product-category">{{product.category}}</p>
+        </mat-card-content>
+        
+        <mat-card-actions align="end">
+          <button mat-button color="primary">
+            <mat-icon>add_shopping_cart</mat-icon> AJOUTER AU PANIER
+          </button>
+          <button mat-icon-button color="accent">
+            <mat-icon>favorite_border</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    
+    <!-- No results message -->
+    <div *ngIf="(filteredProducts$ | async)?.length === 0 && !loading && !error" class="no-results">
+      <mat-icon>search_off</mat-icon>
+      <p>Aucun produit trouvé correspondant à vos critères de recherche.</p>
+    </div>
+  </div>
